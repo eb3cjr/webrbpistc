@@ -1,0 +1,16 @@
+{
+  "name": "web_stc",
+  "version": "1.0.0",
+  "description": "WEB que mostra els voltatges de STC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "RG_RR",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "sqlite3": "^5.0.2"
+  }
+}
