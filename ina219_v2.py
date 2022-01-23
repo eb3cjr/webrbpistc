@@ -311,6 +311,7 @@ if __name__=='__main__':
         print("#samples: %d, #Repetitions: %d" %(samples, repetitions))
         print("#V< 4,8v: %s, Ultima vegada: %s" %(low_v_rpi_times, t_last_low_v_rpi))
         print("#V<12,4v: %s, Ultima vegada: %s" %(low_v_bat1_times, t_last_low_v_bat1))
+        print("")
         print("CPU Tmax: %s, Ultima vegada: %s" %(cputempmax/1000.0, t_last_cputempmax))
         print("RPI Vmin:  %s, Ultima vegada: %s" %(rpi_voltage_min, t_last_rpi_voltage_min))
         print("")
