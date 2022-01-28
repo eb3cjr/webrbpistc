@@ -13,11 +13,18 @@ app.set('view engine', 'hbs');
 //defineix port
 const port = 8090
 
-app.get('/', (req, res) => {
-  MetricsRepository.getRaspberryMetrics();
+app.get('/', async (req, res) => {
+  const { cpuTemp, psuVolSol1, psuVolBat1, psuVolBat2, psuVolRbPi, timestamp } =
+    await MetricsRepository.getRaspberryLatestsMetrics();
   res.render(path.join(__dirname,'./views/view'), {
     author: 'Súper RG & RR',
     date: '06_01_2022',
+    cpuTemp,
+    psuVolSol1,
+    psuVolBat1,
+    psuVolBat2,
+    psuVolRbPi,
+    timestamp
   });
 
 })

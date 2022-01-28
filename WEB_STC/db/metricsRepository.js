@@ -5,16 +5,20 @@ module.exports = class MetricsRepository {
     // static dbPath = '../STC_Voltage.db';
 
     /**
-     * Returns an object that contains different properties
-     * from the RaspberryPi.
+     * Returns the latest metrics from the RaspberryPi.
      */
-    static async getRaspberryMetrics() {
+    static async getRaspberryLatestsMetrics() {
         // we supose nothing bad happens so we don't handle possible errors
         const dbCon = await MetricsRepository._connectToDB();
-        const statement = `SELECT cpu_temp FROM stc_bat_dades;`;
+        const statement = `SELECT (cpu_temp AS cpuTemp, psu_vol_sol_1 AS psuVolSol1,
+            psu_vol_bat_1 AS psuVolBat1, psu_vol_bat_2 AS psuVolBat2,
+            psu_vol_rb_pi AS psuVolRbPi, timestamp)
+            FROM stc_bat_dades
+            ORDER BY timestamp DESC;`;
+
         const rows = await MetricsRepository._promisifyAll(dbCon, statement);
-        console.log(rows);
         dbCon.close();
+        return rows[0];
     }
 
     /**
