@@ -1,8 +1,8 @@
 const sqlite3 = require('sqlite3');
 
 module.exports = class MetricsRepository {
-    static dbPath = '/home/pi/Current-Power_Monitor_HAT/RaspberryPi/STC_Voltage.db';
-    // static dbPath = '../STC_Voltage.db';
+    // static dbPath = '/home/pi/Current-Power_Monitor_HAT/RaspberryPi/STC_Voltage.db';
+    static dbPath = '../STC_Voltage.db';
 
     /**
      * Returns the latest metrics from the RaspberryPi.
@@ -27,10 +27,6 @@ module.exports = class MetricsRepository {
     static async getRaspberryMaxMetrics() {
         // we supose nothing bad happens so we don't handle possible errors
         const dbCon = await MetricsRepository._connectToDB();
-        // const statement = `SELECT MAX(cpu_temp) AS cpuTempMax, timestamp AS cpuTempTimestampMax
-        // FROM stc_bat_dades
-        // SELECT MAX(psu_vol_sol_1) AS psuVolSol1Max, timestamp AS psuVolSol1TimestampMax
-        // FROM stc_bat_dades;`;
         const statementCpuMax = `SELECT MAX(cpu_temp) AS cpuTempMax, timestamp AS timestamp
         FROM stc_bat_dades;`;
         const rowsCpuMax = await MetricsRepository._promisifyAll(dbCon, statementCpuMax);
@@ -63,7 +59,6 @@ module.exports = class MetricsRepository {
                 ...rowsPsuVolRbPiMax[0]
             }
         };
-        console.log(data);
         return data;
     }
 
@@ -73,9 +68,9 @@ module.exports = class MetricsRepository {
      */
     static _connectToDB() {
         return new Promise((resolve, reject) => {
-            const con = new sqlite3.Database('../STC_Voltage.db', (err) => {
+            const con = new sqlite3.Database(MetricsRepository.dbPath, (err) => {
                 if (err) {
-                    reject(error);
+                    reject(err);
                 }
                 resolve(con);
             });
